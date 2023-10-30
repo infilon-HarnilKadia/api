@@ -1,0 +1,308 @@
+@page {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    font-weight: 400;
+    color: #000;
+}
+
+body {
+    font-family: ff400, monospace;
+    margin: 20px;
+    font-size: 10px;
+}
+
+b {
+    font-family: ff500, monospace;
+}
+
+p {
+    margin: 0;
+}
+
+.newpage {
+    page-break-before: always;
+}
+
+header table * {
+    vertical-align: top;
+}
+
+header table {
+    width: 100%;
+}
+
+header .logo img {
+    width: 321px;
+}
+
+header .address {
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+header .address b {
+    font-size: 11px;
+}
+
+header .title {
+    font-family: ff500, monospace;
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+header .service_no {
+    font-family: ff500, monospace;
+    font-size: 13px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+header .number_details td {
+    padding-top: 15px;
+}
+
+.views {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+    border-spacing: unset;
+    margin-top: 2px;
+}
+
+.views td.mains {
+    border-top: 1px solid #000;
+}
+
+.branches {
+    width: 100%;
+}
+
+.branches b {
+    display: block;
+    font-family: ff500, monospace;
+}
+
+.branches td {
+    padding: 0 4px;
+}
+
+.signs {
+    /*width: 50px;*/
+    max-height: 22px;
+    margin-left: 10px;
+    margin-top: -5px;
+    position: absolute;
+}
+
+.footer .mains {
+    padding: 3px;
+}
+
+.footer * {
+    font-size: 8px;
+}
+
+.copytights {
+    padding-left: 7px !important;
+    padding-bottom: 4px !important;
+}
+
+.th {
+    font-family: ff500, monospace;
+}
+
+table * {
+    vertical-align: top;
+}
+
+.customer {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.customer td {
+    padding: 0 7px;
+}
+
+.label {
+    font-family: ff600, monospace;
+    padding-top: 4px;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.forms {
+    padding-left: 18px;
+}
+
+.forms table {
+    margin-bottom: 7px;
+    width: 100%;
+}
+
+.forms table td {
+    padding: 0 4px;
+}
+
+.lines {
+    width: 300px;
+    border-bottom: 1px dotted #666;
+}
+
+.simple i {
+    font-style: normal;
+    padding-left: 4px;
+}
+
+.simple {
+    width: 200px;
+}
+
+.checkboxes {
+    width: 200px;
+}
+
+.lines i {
+    font-style: normal;
+    padding-left: 5px;
+}
+
+.lines span {
+    background: #fff;
+    position: relative;
+}
+
+.lines span:after {
+    position: absolute;
+    content: '';
+}
+
+.checkbox span {
+    width: 200px;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox b {
+    width: 7px;
+    height: 7px;
+    border: 1px solid #000;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    top: 4px;
+    margin-left: 100px;
+}
+
+.checkbox b img {
+    opacity: 0;
+    width: 9px;
+}
+
+.checkbox.checked b {
+    border: 0;
+}
+
+.checkbox.checked b img {
+    opacity: 1;
+}
+
+.extras .checkbox b {
+    margin-left: 120px;
+}
+
+.small-space .checkbox b {
+    margin-left: 40px !important;
+}
+
+.small-space .lines {
+    width: 200px !important;
+}
+
+.users td {
+    padding: 0 4px;
+}
+
+.users {
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.users * {
+    font-size: 10px;
+}
+
+.notice {
+    width: 100%;
+    font-size: 8px;
+    margin-bottom: 2px;
+}
+
+.notice .th {
+    padding-left: 8px;
+    width: 80px;
+}
+
+.secion3 {
+    width: 100%;
+    margin-bottom: 4px;
+    margin-left: -2px;
+}
+
+.secion3 td.leftys {
+    text-align: left;
+    padding-top: 4px;
+    font-size: 12px;
+}
+
+.secs2 td {
+    text-align: center;
+}
+
+.secs2 td.lefts {
+    text-align: left;
+}
+
+.noapsces b {
+    margin-left: 30px;
+!important;
+}
+
+.noapsces .checkbox span,
+.noapsces.checkboxes {
+    width: 70px !important;
+}
+
+.lefts.checkboxes b {
+    margin-left: 140px !important;
+}
+
+.hegihts {
+    margin-bottom: 10px;
+    height: 255px;
+    overflow: hidden;
+}
+
+.scdpage table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.scdpage table b {
+    font-family: ff500, monospace;
+}
+
+.forms.scdpage {
+    padding-bottom: 7px;
+    padding-left: 4px;
+}
+
+.hegihts_full {
+    margin-bottom: 10px;
+    height: 580px;
+    overflow: hidden;
+}

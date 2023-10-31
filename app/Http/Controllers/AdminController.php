@@ -6,6 +6,7 @@ use App\Models\Adminlogin;
 use App\Models\Adminpermission;
 use App\Models\BookingOrder;
 use App\Models\FuelPurchaseOrder;
+use App\Models\MasterCustomer;
 use App\Models\MasterDriver;
 use App\Models\MasterLocation;
 use App\Models\MasterTrailer;
@@ -655,7 +656,7 @@ class AdminController extends Controller
         $array = $req->all();
         $array["u_user_id"] = $req->user_id;
         $array["u_date"] = date("Y-m-d H:i:s");
-        $table =bookingorder::where("user_id",$req->user_id)->where("id",$req->id)->update($array);
+        $table = bookingorder::where("user_id",$req->user_id)->where("id",$req->id)->update($array);
         if($table){
             $output["status"]="success";
             $output["message"]="Data updated successfully";
@@ -665,10 +666,21 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function fuelpurchaseorder(Request $req){
-        $output = [];
-        $table = FuelPurchaseOrder::select("");
+    public function bookingCus(){
+        $output=[];
+        $table = MasterCustomer::select("id","name");
+        if($table){
+            $output["data"] = $table;
+        }
+        else{
+            $output["data"]=null;
+        }
+        return response()->json($output);
     }
+    // public function fuelpurchaseorder(Request $req){
+    //     $output = [];
+    //     $table = FuelPurchaseOrder::select("");
+    // }
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");

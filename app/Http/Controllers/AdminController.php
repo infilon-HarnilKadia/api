@@ -473,7 +473,7 @@ class AdminController extends Controller
             ->where("master_location.user_id", $req->user_id)
             ->where("master_location.status", 1)
             ->get()->toArray();
-            // dd($table);
+        // dd($table);
         if ($table) {
             $output['data'] = $table;
         } else {
@@ -582,109 +582,148 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function showtrailermaster(Request $req){
+    public function showtrailermaster(Request $req)
+    {
         $output = [];
-        $table=MasterTrailer::select("id", "name", "model", "year", "axles", "tyre", "trailer", "weight", "gvm")->where("user_id",$req->user_id)->where("id",$req->id)->where("status",1)->get()->toArray();
-        if($table){
-            $output["data"]=$table;
-        }else{
-            $output['data']=null;
+        $table = MasterTrailer::select("id", "name", "model", "year", "axles", "tyre", "trailer", "weight", "gvm")->where("user_id", $req->user_id)->where("id", $req->id)->where("status", 1)->get()->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output['data'] = null;
         }
         return response()->json($output);
     }
-    public function edittrailermaster(Request $req){
-        $output=[];
+    public function edittrailermaster(Request $req)
+    {
+        $output = [];
         $array = $req->all();
         $array['u_user_id'] = $req->user_id;
         $array['u_date'] = date("Y-m-d H:i:s");
-        $table = MasterTrailer::where("id",$req->id)->update($array);
-        if($table){
-            $output["status"]="success";
-            $output["message"]="Data updated successfully";
-        }else{
-            $output["status"]="failed";
-            $output["message"]="Failed to update data";
+        $table = MasterTrailer::where("id", $req->id)->update($array);
+        if ($table) {
+            $output["status"] = "success";
+            $output["message"] = "Data updated successfully";
+        } else {
+            $output["status"] = "failed";
+            $output["message"] = "Failed to update data";
         }
         return response()->json($output);
     }
 
-    public function bookingorder(Request $req){
+    public function bookingorder(Request $req)
+    {
         $output = [];
-        $table = BookingOrder::select("b_date","booking_order.name as dn","a1.name as c_name","truck_no","a2.name as trail_no","a3.name as destination","invoice","i_date")
-        ->join("master_customer as a1","booking_order.customer","=","a1.id")
-        ->join("master_trailer as a2","booking_order.trailer","=","a2.id")
-        ->join("master_location as a3","booking_order.destination","=","a3.id")
-        ->where("booking_order.user_id",$req->user_id)
-        ->where("booking_order.status",1)
-        ->get()->toArray();
-        if($table){
+        $table = BookingOrder::select("b_date", "booking_order.name as dn", "a1.name as c_name", "truck_no", "a2.name as trail_no", "a3.name as destination", "invoice", "i_date")
+            ->join("master_customer as a1", "booking_order.customer", "=", "a1.id")
+            ->join("master_trailer as a2", "booking_order.trailer", "=", "a2.id")
+            ->join("master_location as a3", "booking_order.destination", "=", "a3.id")
+            ->where("booking_order.user_id", $req->user_id)
+            ->where("booking_order.status", 1)
+            ->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }
-        else{
+        } else {
             $output["data"] = null;
         }
         return response()->json($output);
     }
-    public function deletebookingorder(Request $req){
+    public function deletebookingorder(Request $req)
+    {
         $output = [];
-        $table = bookingorder::where("name",$req->dn)->update(["status"=>0]);
-        if($table){
+        $table = bookingorder::where("name", $req->dn)->update(["status" => 0]);
+        if ($table) {
             $output["status"] = "success";
             $output["message"] = "Data deleted successfully";
-        }else{
+        } else {
             $output["status"] = "failed";
             $output["message"] = "Data failed to deleted";
         }
         return response()->json($output);
     }
-    public function showbookingorder(Request $req){
+    public function showbookingorder(Request $req)
+    {
         $output = [];
-        $table = bookingorder::select("b_date","name","customer","truck_no","trailer","destination","invoice","i_date","loading_date","truck","return","container","description","weight","driver","driver_cell","driver_lic","remarks","narration","others","notes","notes_1","notes_2")
-        ->where("user_id",$req->user_id)
-        ->where("id",$req->dn)
-        ->where("status",1)->get()->toArray();
-        if($table){
+        $table = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
+            ->where("user_id", $req->user_id)
+            ->where("id", $req->dn)
+            ->where("status", 1)->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }else{
-            $output["data"]=null;
+        } else {
+            $output["data"] = null;
         }
         return response()->json($output);
     }
-    public function editbookingorder(Request $req){
+    public function editbookingorder(Request $req)
+    {
         $output = [];
         $array = $req->all();
         $array["u_user_id"] = $req->user_id;
         $array["u_date"] = date("Y-m-d H:i:s");
-        $table =bookingorder::where("user_id",$req->user_id)->where("id",$req->id)->update($array);
-        if($table){
-            $output["status"]="success";
-            $output["message"]="Data updated successfully";
-        }else{
+        $table = bookingorder::where("user_id", $req->user_id)->where("id", $req->id)->update($array);
+        if ($table) {
+            $output["status"] = "success";
+            $output["message"] = "Data updated successfully";
+        } else {
             $output["status"] = "failed";
             $output["message"] = "Data failed to update";
         }
         return response()->json($output);
     }
-    public function addbookingorder(Request $req){
-        $output=[];
+    public function addbookingorder(Request $req)
+    {
+        $output = [];
         $array = $req->all();
         $array['user_id'] = $req->user_id;
         $array['l_date'] = date('Y-m-d H:i:s');
         $array['status'] = 1;
         $table = bookingorder::insert($array);
-        if($table){
+        if ($table) {
             $output['message'] = "Data Saved Successfully";
             $output['status'] = "success";
-        }
-        else{
+        } else {
             $output['message'] = "Data Failed To Save";
             $output['status'] = "failed";
         }
+        return response()->json($output);
     }
-    public function fuelpurchaseorder(Request $req){
+    public function bookingTruck()
+    {
         $output = [];
-        $table = FuelPurchaseOrder::select("");
+        $table = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output["data"] = null;
+        }
+        return response()->json($output);
     }
+    public function bookingTrailer()
+    {
+        $output = [];
+        $table = MasterTrailer::select("id", "name")->where("status", 1)->get()->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output["data"] = null;
+        }
+        return response()->json($output);
+    }
+    public function bookingDriver()
+    {
+        $output = [];
+        $table = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output["data"] = null;
+        }
+        return response()->json($output);
+    }
+    // public function fuelpurchaseorder(Request $req){
+    //     $output = [];
+    //     $table = FuelPurchaseOrder::select("");
+    // }
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");

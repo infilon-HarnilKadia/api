@@ -665,27 +665,10 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function addbookingorder(Request $req){
-        $output=[];
-        $array = $req->all();
-        $array['user_id'] = $req->user_id;
-        $array['l_date'] = date('Y-m-d H:i:s');
-        $array['status'] = 1;
-        $table = bookingorder::insert($array);
-        if($table){
-            $output['message'] = "Data Saved Successfully";
-            $output['status'] = "success";
-        }
-        else{
-            $output['message'] = "Data Failed To Save";
-            $output['status'] = "failed";
-        }
+    public function fuelpurchaseorder(Request $req){
+        $output = [];
+        $table = FuelPurchaseOrder::select("");
     }
-    // public function fuelpurchaseorder(Request $req){
-    //     $output = [];
-    //     $table = FuelPurchaseOrder::select("")
-    // }
-    
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");

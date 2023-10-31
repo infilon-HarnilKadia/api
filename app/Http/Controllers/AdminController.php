@@ -667,7 +667,7 @@ class AdminController extends Controller
     }
     public function fuelpurchaseorder(Request $req){
         $output = [];
-        $table = FuelPurchaseOrder::select("")
+        $table = FuelPurchaseOrder::select("");
     }
     // public function logout(Request $req){
     //     $output = [];

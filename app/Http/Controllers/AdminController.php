@@ -665,11 +665,11 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    https://github.com/infilon-HarnilKadia/api.git
-    public function fuelpurchaseorder(Request $req){
-        $output = [];
-        $table = FuelPurchaseOrder::select("")
-    }
+    // public function fuelpurchaseorder(Request $req){
+    //     $output = [];
+    //     $table = FuelPurchaseOrder::select("")
+    // }
+    
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");

@@ -55,6 +55,10 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/deletebookingorder',[AdminController::class,'deletebookingorder']);
     Route::post('/editbookingorder',[AdminController::class,'editbookingorder']);
     Route::post('/addbookingorder',[AdminController::class,'addbookingorder']);
+
+    //DPz0ne
+    Route::post('/bookingCus',[AdminController::class,'bookingCus']);
+    Route::post('/bookingLoading',[AdminController::class,'bookingLoading']);
     
     Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
     Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);

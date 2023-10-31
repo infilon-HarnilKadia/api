@@ -6,7 +6,9 @@ use App\Models\Adminlogin;
 use App\Models\Adminpermission;
 use App\Models\BookingOrder;
 use App\Models\FuelPurchaseOrder;
+use App\Models\MasterCustomer;
 use App\Models\MasterDriver;
+use App\Models\MasterLoadingPoint;
 use App\Models\MasterLocation;
 use App\Models\MasterTrailer;
 use App\Models\MasterTruck;
@@ -718,8 +720,42 @@ class AdminController extends Controller
         } else {
             $output["data"] = null;
         }
+        return response()->json($output);}
+    // DPz0ne
+    public function bookingCus(){
+        $output=[];
+        $table = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
+        if($table){
+            $output["data"] = $table;
+        }
+        else{
+            $output["data"]=null;
+        }
         return response()->json($output);
     }
+    public function bookingLoading(){
+        $output=[];
+        $table = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
+        if($table){
+            $output["data"] = $table;
+        }
+        else{
+            $output["data"]=null;
+        }
+        return response()->json($output);
+    }
+    public function bookingDestination(){
+        $output=[];
+        $table = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
+        if($table){
+            $output["data"] = $table;
+        }
+        else{
+            $output["data"]=null;
+        }
+        return response()->json($output);
+    }
+    
     // public function fuelpurchaseorder(Request $req){
     //     $output = [];
     //     $table = FuelPurchaseOrder::select("");

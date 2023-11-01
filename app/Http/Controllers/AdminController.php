@@ -687,12 +687,24 @@ class AdminController extends Controller
     public function addbookingorder(Request $req)
     {
         $output = [];
+        $obj=[];
         $array = $req->all();
         $array['user_id'] = $req->user_id;
         $array['l_date'] = date('Y-m-d H:i:s');
         $array['status'] = 1;
-        $table = bookingorder::insert($array);
-        if ($table) {
+        bookingorder::insert($array);
+        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();   
+        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray(); 
+        $table4 = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
+        $table5 = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
+        $table6 = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
+        $obj['truck']=$table2;
+        $obj['driver']=$table3;
+        $obj['customer']=$table4;
+        $obj['loading']=$table5;
+        $obj['location']=$table6;
+        if ($obj) {
+            $output['data'] = $obj;
             $output['message'] = "Data Saved Successfully";
             $output['status'] = "success";
         } else {

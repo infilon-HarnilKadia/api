@@ -67,11 +67,9 @@ Route::group(["middleware" => "checkToken"],function(){
     //fuelpurchaseorder
     Route::post('/fuelpurchaseorder',[AdminController::class,'fuelpurchaseorder']);
     Route::post('/addfuelpurchaseorder',[AdminController::class,'addfuelpurchaseorder']);
+    Route::post('/deletefuelpurchaseorder',[AdminController::class,'deletefuelpurchaseorder']);
     //end fuelpurchaseorder
-    // Route::post('/droupdown',[AdminController::class,'dropdown']);
-    // Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
-    // Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);
-    // Route::post('/bookingDriver',[AdminController::class,'bookingDriver']);
+  
 
     //@DPz0ne
     Route::post('/showfuelpurchaseorder',[AdminController::class,'showfuelpurchaseorder']);

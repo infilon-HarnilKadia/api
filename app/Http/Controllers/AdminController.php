@@ -757,7 +757,7 @@ class AdminController extends Controller
     }
     public function deletefuelpurchaseorder(Request $req){
         $output = [];
-        $table = bookingorder::where("name",$req->fpono)->update(["status",0]);
+        $table = fuelpurchaseorder::where("name",$req->name)->update(["status"=>0]);
         if($table){
             $output["status"] = "success";
             $output["message"] = "Data Deleted successfully";
@@ -765,6 +765,7 @@ class AdminController extends Controller
             $output["status"] = "failed";
             $output["message"] = "Data failed Deleted successfully";
         }
+        return response()->json($output);
     }
     //@DPz0ne
     public function showfuelpurchaseorder(Request $req){

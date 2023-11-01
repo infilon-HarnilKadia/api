@@ -782,8 +782,30 @@ class AdminController extends Controller
         return response()->json($output);
     }
     //@DPz0ne
-
+    
     //****************** End Fuel Purchase Order ************************
+    
+    //****************** Start Delivery Note ************************
+    //@DPz0ne
+    public function showdeliverynote(Request $req){
+        $output=[];
+        $table=bookingorder::select("bookingorder.name","b_date","customer",'laoding',"destination","description","weight");
+        if($table){
+            $output['data'] = $table;
+        }
+        else{
+            $output['data'] = null;
+        }
+        return response()->json($output);
+    }
+
+
+
+
+
+
+
+
 
     // public function logout(Request $req){
     //     $output = [];
@@ -803,4 +825,5 @@ class AdminController extends Controller
     //     }
     //     return response()->json($output);
     // }
+    
 }

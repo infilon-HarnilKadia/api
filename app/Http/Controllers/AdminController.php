@@ -806,11 +806,11 @@ class AdminController extends Controller
     //@DPz0ne
     public function showdeliverynote(Request $req){
         $output=[];
-        $table=bookingorder::select("bookingorder.name","b_date","mc.name as customer",'mlp.name as laoding',"ml.name as destination","description","weight")
-        ->join("master_customer as mc","bookingorder.customer","=","mc.id")
-        ->join("master_loading_point as mlp","bookingorder.loading","=","mlp.id")
-        ->join("master_location as ml","bookingorder.destination","=","ml.id")
-        ->where("status",1)->get()->toArray();
+        $table=bookingorder::select("booking_order.name","b_date","mc.name as customer",'mlp.name as laoding',"ml.name as destination","description","weight")
+        ->join("master_customer as mc","booking_order.customer","=","mc.id")
+        ->join("master_loading_point as mlp","booking_order.loading","=","mlp.id")
+        ->join("master_location as ml","booking_order.destination","=","ml.id")
+        ->where("booking_order.status",1)->where("booking_order.user_id",$req->user_id)->get()->toArray();
         if($table){
             $output['data'] = $table;
         }
@@ -820,7 +820,10 @@ class AdminController extends Controller
         return response()->json($output);
     }
 
-
+ //****************** End Delivery Note ************************
+ 
+ 
+ //****************** Start Shortfall ************************
 
 
 
@@ -848,4 +851,3 @@ class AdminController extends Controller
     // }
     
 }
-[]

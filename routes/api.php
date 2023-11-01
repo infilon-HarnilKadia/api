@@ -74,6 +74,7 @@ Route::group(["middleware" => "checkToken"],function(){
     //@DPz0ne
     Route::post('/showfuelpurchaseorder',[AdminController::class,'showfuelpurchaseorder']);
     Route::post('/editfuelpurchaseorder',[AdminController::class,'editfuelpurchaseorder']);
+    Route::post('/showdeliverynote',[AdminController::class,'showdeliverynote']);
     //@DPz0ne
 });
 

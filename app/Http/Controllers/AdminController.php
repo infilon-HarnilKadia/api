@@ -657,6 +657,14 @@ class AdminController extends Controller
         $obj['table2']=$table2;
         $obj['table3']=$table3;
         $obj['table4']=$table4;
+        $table5 = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
+        $table6 = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
+        $obj['bookingorder']=$table1;
+        $obj['truck']=$table2;
+        $obj['driver']=$table3;
+        $obj['customer']=$table4;
+        $obj['loading']=$table5;
+        $obj['location']=$table6;
         if ($obj) {
             $output["data"] = $obj;
         } else {
@@ -697,73 +705,7 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function bookingTruck()
-    {
-        $output = [];
-        $table = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingTrailer()
-    {
-        $output = [];
-        $table = MasterTrailer::select("id", "name")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingDriver()
-    {
-        $output = [];
-        $table = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    // DPz0ne
-    public function bookingCus()
-    {
-        $output = [];
-        $table = MasterCustomer::select("id", "name")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingLoading()
-    {
-        $output = [];
-        $table = MasterLoadingPoint::select('id', 'name')->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingDestination()
-    {
-        $output = [];
-        $table = MasterLocation::select('id', 'name')->where('status', 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
+
     //****************** Fuel Purchase Order ************************
     public function fuelpurchaseorder(Request $req)
     {

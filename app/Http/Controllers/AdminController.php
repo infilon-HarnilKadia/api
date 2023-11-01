@@ -10,6 +10,7 @@ use App\Models\MasterCustomer;
 use App\Models\MasterDriver;
 use App\Models\MasterLoadingPoint;
 use App\Models\MasterLocation;
+use App\Models\MasterSupplier;
 use App\Models\MasterTrailer;
 use App\Models\MasterTruck;
 use Carbon\Carbon;
@@ -749,6 +750,38 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
+    //@DPz0ne
+    public function showfuelpurchaseorder(Request $req){
+        $output=[];
+        $obj=[];
+        $obj['fuelpurchase'] = fuelpurchaseorder::select("b_date","name as FPO No.","qty_lts as Qty Lts","price")->where("name",$req->fpono)->where("user_id",$req->user_id)->where("status",1)->get()->toArray();
+        $obj["supplier"]= MasterSupplier::select("name")->where("status",1)->get()->toArray();
+        $obj["dn"] = bookingorder::select("name")->where("status",1)->get()->toArray();
+        $obj["from"] = MasterLoadingPoint::select("name")->where("status",1)->get()->toArray();
+        if($obj){
+            $output['data'] = $obj;
+        }
+        else{
+            $output['data'] = null;
+        }
+        return response()->json($output); 
+    }
+    public function editfuelpurchaseorder(Request $req){
+        $output = [];
+        $array=$req->all();
+        $array['u_date'] = date("Y-m-d H:i:s");
+        $array['u_user_id'] = $req->user_id;
+        $table = fuelpurchaseorder::where("name",$req->fpono)->where('user_id',$req->user_id)->update($array)->get()->toArray();
+        if($table){
+            $output["status"] = "success";
+            $output['message'] = "Data Updated Successfully";
+        } else {
+            $output["status"] = "failed";
+            $output["message"] = "Data Failed To Update";
+        }
+        return response()->json($output);
+    }
+    //@DPz0ne
 
     //****************** End Fuel Purchase Order ************************
 

@@ -10,6 +10,7 @@ use App\Models\MasterCustomer;
 use App\Models\MasterDriver;
 use App\Models\MasterLoadingPoint;
 use App\Models\MasterLocation;
+use App\Models\MasterSupplier;
 use App\Models\MasterTrailer;
 use App\Models\MasterTruck;
 use Carbon\Carbon;
@@ -646,7 +647,7 @@ class AdminController extends Controller
     {
         $output = [];
         $obj = [];
-        $table1 = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
+        $table1 = bookingorder::select("b_date", "name", "customer", "truck_no as number", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
             ->where("user_id", $req->user_id)
             ->where("id", $req->dn)
             ->where("status", 1)->get()->toArray();
@@ -734,21 +735,36 @@ class AdminController extends Controller
     public function addfuelpurchaseorder(Request $req)
     {
         $output = [];
+        $obj = [];
         $array = $req->all();
         $array["user_id"] = $req->user_id;
         $array["l_date"] = date("Y-m-d H:i:s");
         $array['status'] = 1;
         $table = FuelPurchaseOrder::insert($array);
+        $obj["supplier"]= MasterSupplier::select("name")->where("status",1)->get()->toArray();
+        $obj["dn"] = bookingorder::select("name")->where("status",1)->get()->toArray();
+        $obj["from"] = MasterLoadingPoint::select("name")->where("status",1)->get()->toArray();
         if ($table) {
             $output["status"] = "success";
             $output['message'] = "Data Added Successfully";
+            $output['data'] = $obj;
         } else {
             $output["status"] = "failed";
             $output["message"] = "Data Failed To add";
         }
         return response()->json($output);
     }
-
+    public function deletefuelpurchaseorder(Request $req){
+        $output = [];
+        $table = bookingorder::where("name",$req->fpono)->update(["status",0]);
+        if($table){
+            $output["status"] = "success";
+            $output["message"] = "Data Deleted successfully";
+        }else{
+            $output["status"] = "failed";
+            $output["message"] = "Data failed Deleted successfully";
+        }
+    }
     //****************** End Fuel Purchase Order ************************
 
     // public function logout(Request $req){

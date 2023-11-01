@@ -645,22 +645,22 @@ class AdminController extends Controller
     public function showbookingorder(Request $req)
     {
         $output = [];
-        $obj=[];
+        $obj = [];
         $table1 = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
             ->where("user_id", $req->user_id)
             ->where("id", $req->dn)
             ->where("status", 1)->get()->toArray();
-        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();   
-        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray(); 
-        $table4 = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
-        $table5 = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
-        $table6 = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
-        $obj['bookingorder']=$table1;
-        $obj['truck']=$table2;
-        $obj['driver']=$table3;
-        $obj['customer']=$table4;
-        $obj['loading']=$table5;
-        $obj['location']=$table6;
+        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        $table4 = MasterCustomer::select("id", "name")->where("status", 1)->get()->toArray();
+        $table5 = MasterLoadingPoint::select('id', 'name')->where("status", 1)->get()->toArray();
+        $table6 = MasterLocation::select('id', 'name')->where('status', 1)->get()->toArray();
+        $obj['bookingorder'] = $table1;
+        $obj['truck'] = $table2;
+        $obj['driver'] = $table3;
+        $obj['customer'] = $table4;
+        $obj['loading'] = $table5;
+        $obj['location'] = $table6;
         if ($obj) {
             $output["data"] = $obj;
         } else {
@@ -687,14 +687,26 @@ class AdminController extends Controller
     public function addbookingorder(Request $req)
     {
         $output = [];
+        $obj = [];
         $array = $req->all();
         $array['user_id'] = $req->user_id;
         $array['l_date'] = date('Y-m-d H:i:s');
         $array['status'] = 1;
-        $table = bookingorder::insert($array);
-        if ($table) {
+        $table1 = bookingorder::insert($array);
+        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
+        $table4 = MasterCustomer::select("id", "name")->where("status", 1)->get()->toArray();
+        $table5 = MasterLoadingPoint::select('id', 'name')->where("status", 1)->get()->toArray();
+        $table6 = MasterLocation::select('id', 'name')->where('status', 1)->get()->toArray();
+        $obj['truck'] = $table2;
+        $obj['driver'] = $table3;
+        $obj['customer'] = $table4;
+        $obj['loading'] = $table5;
+        $obj['location'] = $table6;
+        if ($obj) {
             $output['message'] = "Data Saved Successfully";
             $output['status'] = "success";
+            $output['data'] = $obj;
         } else {
             $output['message'] = "Data Failed To Save";
             $output['status'] = "failed";
@@ -719,23 +731,24 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function addfuelpurchaseorder(Request $req){
-        $output=[];
+    public function addfuelpurchaseorder(Request $req)
+    {
+        $output = [];
         $array = $req->all();
-        $array["user_id"]=$req->user_id;
+        $array["user_id"] = $req->user_id;
         $array["l_date"] = date("Y-m-d H:i:s");
         $array['status'] = 1;
         $table = FuelPurchaseOrder::insert($array);
-        if($table){
+        if ($table) {
             $output["status"] = "success";
             $output['message'] = "Data Added Successfully";
-        }else{
+        } else {
             $output["status"] = "failed";
             $output["message"] = "Data Failed To add";
         }
         return response()->json($output);
     }
-  
+
     //****************** End Fuel Purchase Order ************************
 
     // public function logout(Request $req){

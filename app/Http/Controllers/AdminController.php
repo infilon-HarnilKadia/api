@@ -789,7 +789,7 @@ class AdminController extends Controller
     //@DPz0ne
     public function showdeliverynote(Request $req){
         $output=[];
-        $table=bookingorder::select("bookingorder.name","b_date","customer",'laoding',"destination","description","weight");
+        $table=bookingorder::select("bookingorder.name","b_date","customer",'laoding',"destination","description","weight")->where("status",1)->get()->toArray();
         if($table){
             $output['data'] = $table;
         }

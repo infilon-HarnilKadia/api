@@ -822,9 +822,28 @@ class AdminController extends Controller
 
  //****************** End Delivery Note ************************
  
- 
  //****************** Start Shortfall ************************
-
+    public function shortfallform(){
+        $output=[];
+        $obj=[];
+        $table1=bookingorder::select("booking_order.name","b_date","md.name as driver","mlp.name as laoding","ml as destination","laoding_date","mt.name as trailer","tm.name as truck","truck_no")
+        ->join("master_driver as md","booking_order.driver","=","md.id")
+        ->join("master_loading_point as mlp","booking_order.loading","=","mlp.id")
+        ->join("master_location as ml","Booking_order.destination","=","ml.id")
+        ->join("master_trailer as mt","booking_order.trailer","=","mt.id")
+        ->join("master_truck as tm","booking_order.truck","=","tm.id")
+        ->where("status",1)->get()->toArray();
+        $table2=bookingorder::select("id","name")->get()->toArray();
+        $obj['bookingoerder']=$table1;
+        $obj['dropdownbooking']=$table2;
+        if ($obj) {
+            $output['data'] = $obj;
+        }
+        else{
+            $output['data'] = null;
+        }
+        return response()->json($output);
+    }
 
 
 

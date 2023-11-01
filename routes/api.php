@@ -57,12 +57,12 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/addbookingorder',[AdminController::class,'addbookingorder']);
 
     //DPz0ne
-    Route::post('/bookingCus',[AdminController::class,'bookingCus']);
-    Route::post('/bookingLoading',[AdminController::class,'bookingLoading']);
+    // Route::post('/bookingCus',[AdminController::class,'bookingCus']);
+    // Route::post('/bookingLoading',[AdminController::class,'bookingLoading']);
     
-    Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
-    Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);
-    Route::post('/bookingDriver',[AdminController::class,'bookingDriver']);
+    // Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
+    // Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);
+    // Route::post('/bookingDriver',[AdminController::class,'bookingDriver']);
 });
 
 // Route::post('/logout',[AdminController::class,"logout"]);

@@ -645,12 +645,24 @@ class AdminController extends Controller
     public function showbookingorder(Request $req)
     {
         $output = [];
-        $table = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
+        $obj=[];
+        $table1 = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
             ->where("user_id", $req->user_id)
             ->where("id", $req->dn)
             ->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
+        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();   
+        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray(); 
+        $table4 = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
+        $table5 = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
+        $table6 = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
+        $obj['bookingorder']=$table1;
+        $obj['truck']=$table2;
+        $obj['driver']=$table3;
+        $obj['customer']=$table4;
+        $obj['loading']=$table5;
+        $obj['location']=$table6;
+        if ($obj) {
+            $output["data"] = $obj;
         } else {
             $output["data"] = null;
         }
@@ -689,72 +701,72 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function bookingTruck()
-    {
-        $output = [];
-        $table = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingTrailer()
-    {
-        $output = [];
-        $table = MasterTrailer::select("id", "name")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);
-    }
-    public function bookingDriver()
-    {
-        $output = [];
-        $table = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
-        } else {
-            $output["data"] = null;
-        }
-        return response()->json($output);}
+    // public function bookingTruck()
+    // {
+    //     $output = [];
+    //     $table = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();
+    //     if ($table) {
+    //         $output["data"] = $table;
+    //     } else {
+    //         $output["data"] = null;
+    //     }
+    //     return response()->json($output);
+    // }
+    // public function bookingTrailer()
+    // {
+    //     $output = [];
+    //     $table = MasterTrailer::select("id", "name")->where("status", 1)->get()->toArray();
+    //     if ($table) {
+    //         $output["data"] = $table;
+    //     } else {
+    //         $output["data"] = null;
+    //     }
+    //     return response()->json($output);
+    // }
+    // public function bookingDriver()
+    // {
+    //     $output = [];
+    //     $table = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray();
+    //     if ($table) {
+    //         $output["data"] = $table;
+    //     } else {
+    //         $output["data"] = null;
+    //     }
+    //     return response()->json($output);}
     // DPz0ne
-    public function bookingCus(){
-        $output=[];
-        $table = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
-        if($table){
-            $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
-        }
-        return response()->json($output);
-    }
-    public function bookingLoading(){
-        $output=[];
-        $table = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
-        if($table){
-            $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
-        }
-        return response()->json($output);
-    }
-    public function bookingDestination(){
-        $output=[];
-        $table = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
-        if($table){
-            $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
-        }
-        return response()->json($output);
-    }
+    // public function bookingCus(){
+    //     $output=[];
+    //     $table = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
+    //     if($table){
+    //         $output["data"] = $table;
+    //     }
+    //     else{
+    //         $output["data"]=null;
+    //     }
+    //     return response()->json($output);
+    // }
+    // public function bookingLoading(){
+    //     $output=[];
+    //     $table = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
+    //     if($table){
+    //         $output["data"] = $table;
+    //     }
+    //     else{
+    //         $output["data"]=null;
+    //     }
+    //     return response()->json($output);
+    // }
+    // public function bookingDestination(){
+    //     $output=[];
+    //     $table = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
+    //     if($table){
+    //         $output["data"] = $table;
+    //     }
+    //     else{
+    //         $output["data"]=null;
+    //     }
+    //     return response()->json($output);
+    // }
     
     // public function fuelpurchaseorder(Request $req){
     //     $output = [];

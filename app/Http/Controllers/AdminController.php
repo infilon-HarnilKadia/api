@@ -653,10 +653,6 @@ class AdminController extends Controller
         $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();   
         $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray(); 
         $table4 = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
-        $obj['table1']=$table1;
-        $obj['table2']=$table2;
-        $obj['table3']=$table3;
-        $obj['table4']=$table4;
         $table5 = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
         $table6 = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
         $obj['bookingorder']=$table1;

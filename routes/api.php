@@ -63,6 +63,12 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
     Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);
     Route::post('/bookingDriver',[AdminController::class,'bookingDriver']);
+
+    //fuelpurchaseorder
+    Route::post('/fuelpurchaseorder',[AdminController::class,'fuelpurchaseorder']);
+    Route::post('/addfuelpurchaseorder',[AdminController::class,'addfuelpurchaseorder']);
+    //end fuelpurchaseorder
+    Route::post('/droupdown',[AdminController::class,'dropdown']);
 });
 
 // Route::post('/logout',[AdminController::class,"logout"]);

@@ -645,12 +645,20 @@ class AdminController extends Controller
     public function showbookingorder(Request $req)
     {
         $output = [];
-        $table = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
+        $obj=[];
+        $table1 = bookingorder::select("b_date", "name", "customer", "truck_no", "trailer", "destination", "invoice", "i_date", "loading_date", "truck", "return", "container", "description", "weight", "driver", "driver_cell", "driver_lic", "remarks", "narration", "others", "notes", "notes_1", "notes_2")
             ->where("user_id", $req->user_id)
             ->where("id", $req->dn)
             ->where("status", 1)->get()->toArray();
-        if ($table) {
-            $output["data"] = $table;
+        $table2 = MasterTruck::select("id", "name", "number")->where("status", 1)->get()->toArray();   
+        $table3 = MasterDriver::select("id", "name", "number")->where("status", 1)->get()->toArray(); 
+        $table4 = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
+        $obj['table1']=$table1;
+        $obj['table2']=$table2;
+        $obj['table3']=$table3;
+        $obj['table4']=$table4;
+        if ($obj) {
+            $output["data"] = $obj;
         } else {
             $output["data"] = null;
         }
@@ -720,46 +728,78 @@ class AdminController extends Controller
         } else {
             $output["data"] = null;
         }
-        return response()->json($output);}
+        return response()->json($output);
+    }
     // DPz0ne
-    public function bookingCus(){
-        $output=[];
-        $table = MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
-        if($table){
+    public function bookingCus()
+    {
+        $output = [];
+        $table = MasterCustomer::select("id", "name")->where("status", 1)->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
+        } else {
+            $output["data"] = null;
         }
         return response()->json($output);
     }
-    public function bookingLoading(){
-        $output=[];
-        $table = MasterLoadingPoint::select('id','name')->where("status",1)->get()->toArray();
-        if($table){
+    public function bookingLoading()
+    {
+        $output = [];
+        $table = MasterLoadingPoint::select('id', 'name')->where("status", 1)->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
+        } else {
+            $output["data"] = null;
         }
         return response()->json($output);
     }
-    public function bookingDestination(){
-        $output=[];
-        $table = MasterLocation::select('id','name')->where('status',1)->get()->toArray();
-        if($table){
+    public function bookingDestination()
+    {
+        $output = [];
+        $table = MasterLocation::select('id', 'name')->where('status', 1)->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }
-        else{
-            $output["data"]=null;
+        } else {
+            $output["data"] = null;
         }
         return response()->json($output);
     }
-    
-    // public function fuelpurchaseorder(Request $req){
-    //     $output = [];
-    //     $table = FuelPurchaseOrder::select("");
-    // }
+    //****************** Fuel Purchase Order ************************
+    public function fuelpurchaseorder(Request $req)
+    {
+        $output = [];
+        $table = FuelPurchaseOrder::select("fuel_purchase_order.id", 'fuel_purchase_order.name as FPO No.', 'sup.name as Supplier', 'fuel_purchase_order.b_date as Date', 'mt.name as Truck', 'mtl.name as Trailer', 'loc.name as location', "qty_lts as Qty Lts")
+            ->join("booking_order as bo", "bo.name", "=", "fuel_purchase_order.name")
+            ->join("master_truck as mt", "mt.id", "=", "bo.truck")
+            ->join("master_trailer as mtl", "mtl.id", "=", "bo.trailer")
+            ->join("master_supplier as sup", "sup.id", "=", "fuel_purchase_order.supplier")
+            ->join("master_location as loc", "loc.id", "=", "bo.loading")->where("fuel_purchase_order.user_id", $req->user_id)->where("fuel_purchase_order.status", 1)->get()->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output["data"] = null;
+        }
+        return response()->json($output);
+    }
+    public function addfuelpurchaseorder(Request $req){
+        $output=[];
+        $array = $req->all();
+        $array["user_id"]=$req->user_id;
+        $array["l_date"] = date("Y-m-d H:i:s");
+        $array['status'] = 1;
+        $table = FuelPurchaseOrder::insert($array);
+        if($table){
+            $output["status"] = "success";
+            $output['message'] = "Data Added Successfully";
+        }else{
+            $output["status"] = "failed";
+            $output["message"] = "Data Failed To add";
+        }
+        return response()->json($output);
+    }
+  
+    //****************** End Fuel Purchase Order ************************
+
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");

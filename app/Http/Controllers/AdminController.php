@@ -940,6 +940,18 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
+    public function delborderDetails(Request $req){
+        $output = [];
+        $table = bookingorder::where("name",$req->name)->where("user_id",$req->user_id)->update(["status"=>0]);
+        if ($table) {
+            $output["status"] = "success";
+            $output["message"] = "Data Deleted successfully";
+        } else {
+            $output["status"] = "failed";
+            $output["message"] = "Data failed Deleted successfully";
+        }
+        return response()->json($output);
+    }
     //****************** End Account ************************
 
     // public function logout(Request $req){

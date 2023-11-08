@@ -925,6 +925,21 @@ class AdminController extends Controller
         return response()->json($output);
 
     }
+    public function editborderDetails(Request $req){
+        $output = [];
+        $array = $req->all();
+        $array['u_user_id'] = $req->user_id;
+        $array['u_date'] = date('Y-m-d H:i:s');
+        $table = bookingorder::where("name",$req->name)->where("user_id",$req->user_id)->update($array);
+        if ($table) {
+            $output["status"] = "success";
+            $output['message'] = "Data Updated Successfully";
+        } else {
+            $output["status"] = "failed";
+            $output["message"] = "Data Failed To Update";
+        }
+        return response()->json($output);
+    }
     //****************** End Account ************************
 
     // public function logout(Request $req){

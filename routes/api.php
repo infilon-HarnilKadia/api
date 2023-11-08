@@ -60,7 +60,7 @@ Route::group(["middleware" => "checkToken"],function(){
     // Route::post('/bookingCus',[AdminController::class,'bookingCus']);
     // Route::post('/bookingLoading',[AdminController::class,'bookingLoading']);
     
-    Route::post('/bookingTruck',[AdminController::class,'bookingTruck']);
+    Route::post('/bookingTruck',[AdminController::class,'bookingTruck']); 
     Route::post('/bookingTrailer',[AdminController::class,'bookingTrailer']);
     Route::post('/bookingDriver',[AdminController::class,'bookingDriver']);
 
@@ -77,6 +77,10 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/showdeliverynote',[AdminController::class,'showdeliverynote']);
     Route::post('/shortfallform',[AdminController::class,'shortfallform']);
     //@DPz0ne
+    
+    Route::post('/borderDetails',[AdminController::class,'borderDetails']);
+    Route::post('/showborderDetails',[AdminController::class,'showborderDetails']);
+    Route::post('/account',[AdminController::class,'account']);
 });
 
 // Route::post('/logout',[AdminController::class,"logout"]);

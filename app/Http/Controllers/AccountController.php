@@ -5,8 +5,9 @@
     use App\Models\Account;
     use App\Models\BookingOrder;
     use Illuminate\Http\Request;
+  
 
-    class AccountController extends Controllers
+    class AccountController extends Controller
     {
 
 

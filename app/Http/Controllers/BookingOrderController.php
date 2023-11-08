@@ -203,17 +203,17 @@ class BookingOrderController extends Controller
     
     public function edit($id)
     {
-        $result = BookingOrder::find(enc(2,$id))->toArray();     
+        $result = BookingOrder::find(enc(2,$id));     
         $resp_data['title'] = "Booking Order";
         $resp_data['result'] = $result;
         $resp_data['result']['extra'] = BookingOrderExpense::where('parent_id',enc(2,$id))->get()->toArray(); 
         $resp_data['id'] = enc(1,$result['id']); 
-        $resp_data['customer'] = MasterCustomer::select(['id','name'])->where('status',1)->get();
-        $resp_data['truck'] = MasterTruck::select(['id','name','number'])->where('status',1)->get();
-        $resp_data['trailer'] = MasterTrailer::select(['id','name'])->where('status',1)->get();
-        $resp_data['loading'] = MasterLoadingPoint::select(['id','name'])->where('status',1)->get();
-        $resp_data['location'] = MasterLocation::select(['id','name'])->where('status',1)->get();
-        $resp_data['driver'] = MasterDriver::select(['id','name','cell','licence'])->where('status',1)->get();
+        $resp_data['customer'] = MasterCustomer::select(['id','name'])->where('status',1)->get()->toArray();
+        $resp_data['truck'] = MasterTruck::select(['id','name','number'])->where('status',1)->get()->toArray();
+        $resp_data['trailer'] = MasterTrailer::select(['id','name'])->where('status',1)->get()->toArray();
+        $resp_data['loading'] = MasterLoadingPoint::select(['id','name'])->where('status',1)->get()->toArray();
+        $resp_data['location'] = MasterLocation::select(['id','name'])->where('status',1)->get()->toArray();
+        $resp_data['driver'] = MasterDriver::select(['id','name','cell','licence'])->where('status',1)->get()->toArray()    ;
         
         return view('orders.booking-order-add',$resp_data);
     }

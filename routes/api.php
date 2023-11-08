@@ -80,6 +80,7 @@ Route::group(["middleware" => "checkToken"],function(){
     
     Route::post('/borderDetails',[AdminController::class,'borderDetails']);
     Route::post('/showborderDetails',[AdminController::class,'showborderDetails']);
+    Route::post('/deleteborderDetails',[AdminController::class,'deleteborderDetails']);
     Route::post('/account',[AdminController::class,'account']);
 });
 

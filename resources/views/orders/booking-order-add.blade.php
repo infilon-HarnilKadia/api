@@ -307,4 +307,4 @@ $(document).on('change','select[name="driver"]',function(){
     var response_lic = $('select[name="driver"] option[value="' + $(this).val() + '"]').attr('data-licence');
     $('input[name="driver_lic"]').val(response_lic);
 });
-</script>
+</script>   

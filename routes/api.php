@@ -83,6 +83,8 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/editborderDetails',[AdminController::class,'editborderDetails']);
     Route::post('/delborderDetails',[AdminController::class,'delborderDetails']);
     Route::post('/account',[AdminController::class,'account']);
+
+    Route::post('/showdailyLocation',[AdminController::class,'showdailyLocation']);
 });
 
 // Route::post('/logout',[AdminController::class,"logout"]);

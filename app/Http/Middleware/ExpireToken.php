@@ -23,7 +23,7 @@ class ExpireToken
         $diff = $now->diffInMilliseconds($exptoken->expire_at ?? 0);
         $output = [];
         $cmp = strcmp($exptoken->token ?? '', $request->header("Authorization"));
-        if ($cmp != 0 ||  $diff > 900000) {
+        if ($cmp != 0 || $diff > 900000) {
             $output['message'] = "Token Expired";
             $output["status"] = "failed";
             return response()->json($output);

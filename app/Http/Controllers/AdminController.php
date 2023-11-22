@@ -262,7 +262,7 @@ class AdminController extends Controller
         $table = Adminlogin::select('id')->where("username", $req->username)->where("password", $req->password)->first();
         if ($table) {
             $token = $table->createToken("api_token")->accessToken;
-            Passport::tokensExpireIn(Carbon::now()->addMinutes(2));
+            // Passport::tokensExpireIn(Carbon::now()->addMinutes(2));
             Adminlogin::where("id", $table->id)->update(["token" => $token, "expire_at" => Carbon::now()]);
             // return response()->json(["status" => "success", "token" => $token, "user_id" => $table->id]);
             $output["status"] = "success";
@@ -278,7 +278,7 @@ class AdminController extends Controller
             // $output["username"] = $req->username;
         }
         // $output["header"] = $req->header(); 
-        return response()->json($output);
+
     }
 
     public function dashboard(Request $req)
@@ -873,83 +873,104 @@ class AdminController extends Controller
         }
         return response()->json($output);
     }
-    public function showborderDetails(Request $req){
+    public function showborderDetails(Request $req)
+    {
         $output = [];
         $table = bookingorder::select("booking_order.name", "b_date", "md.name as customer", "mlp.name as laoding", "ml.name as destination", "booking_order.loading_date", "mt.name as trailer", "tm.name as truck", "truck_no")
-        ->join("master_customer as md", "booking_order.customer", "=", "md.id")
-        ->join("master_loading_point as mlp", "booking_order.loading", "=", "mlp.id")
-        ->join("master_location as ml", "Booking_order.destination", "=", "ml.id")
-        ->join("master_trailer as mt", "booking_order.trailer", "=", "mt.id")
-        ->join("master_truck as tm", "booking_order.truck", "=", "tm.id")
-        ->where("booking_order.status", 1)
-        ->where("booking_order.user_id", $req->user_id)
-        ->get()->toArray();
-        $drop1=MasterCustomer::select("id","name")->where("status",1)->get()->toArray();
-        $drop2=MasterTruck::select("id","name")->where("status",1)->get()->toArray();
-        $drop3=MasterTrailer::select("id","name")->where("status",1)->get()->toArray();
-        $drop4=MasterDriver::select("id","name")->where("status",1)->get()->toArray();
-        $drop5=MasterLoadingPoint::select("id","name")->where("status",1)->get()->toArray();
-        $drop6=MasterLocation::select("id","name")->where("status",1)->get()->toArray();
-        if($table){
+            ->join("master_customer as md", "booking_order.customer", "=", "md.id")
+            ->join("master_loading_point as mlp", "booking_order.loading", "=", "mlp.id")
+            ->join("master_location as ml", "Booking_order.destination", "=", "ml.id")
+            ->join("master_trailer as mt", "booking_order.trailer", "=", "mt.id")
+            ->join("master_truck as tm", "booking_order.truck", "=", "tm.id")
+            ->where("booking_order.status", 1)
+            ->where("booking_order.user_id", $req->user_id)
+            ->get()->toArray();
+        $drop1 = MasterCustomer::select("id", "name")->where("status", 1)->get()->toArray();
+        $drop2 = MasterTruck::select("id", "name")->where("status", 1)->get()->toArray();
+        $drop3 = MasterTrailer::select("id", "name")->where("status", 1)->get()->toArray();
+        $drop4 = MasterDriver::select("id", "name")->where("status", 1)->get()->toArray();
+        $drop5 = MasterLoadingPoint::select("id", "name")->where("status", 1)->get()->toArray();
+        $drop6 = MasterLocation::select("id", "name")->where("status", 1)->get()->toArray();
+        if ($table) {
             $output["data"]["bookdetails"] = $table;
-            $output["data"]["customer"]=$drop1;
-            $output["data"]["truck"]=$drop2;
-            $output["data"]["trailer"]=$drop3;
-            $output["data"]["truck"]=$drop4;
-            $output["data"]["loading_point"]=$drop5;
-            $output["data"]["location"]=$drop6;
-        }else{
+            $output["data"]["customer"] = $drop1;
+            $output["data"]["truck"] = $drop2;
+            $output["data"]["trailer"] = $drop3;
+            $output["data"]["truck"] = $drop4;
+            $output["data"]["loading_point"] = $drop5;
+            $output["data"]["location"] = $drop6;
+        } else {
             $output["data"] = null;
         }
-        return $output; 
+        return $output;
     }
     //****************** End Border Details ************************
 
 
 
     //****************** Start Account ************************
-    public function account(Request $req){
+    public function account(Request $req)
+    {
         $output = [];
-        $table = bookingorder::select("booking_order.name","a1.name as customer","booking_order.loading_date","booking_order.weight","a2.rate","a2.i_num","booking_order.i_date")
-        ->join("master_customer as a1","booking_order.customer","a1.id")
-        ->join("account as a2","booking_order.name","a2.name")
-        ->where("booking_order.user_id",$req->user_id)
-        ->where("booking_order.status",1)
-        ->where("a2.status",1)
-        ->get()->toArray();
-        if($table){
+        $table = bookingorder::select("booking_order.name", "a1.name as customer", "booking_order.loading_date", "booking_order.weight", "a2.rate", "a2.i_num", "booking_order.i_date")
+            ->join("master_customer as a1", "booking_order.customer", "a1.id")
+            ->join("account as a2", "booking_order.name", "a2.name")
+            ->where("booking_order.user_id", $req->user_id)
+            ->where("booking_order.status", 1)
+            ->where("a2.status", 1)
+            ->get()->toArray();
+        if ($table) {
             $output["data"] = $table;
-        }else{
+        } else {
             $output['data'] = null;
         }
         return response()->json($output);
-
     }
-    public function deleteborderDetails(Request $req){
-        $output=[];
-        $table = bookingorder::where("name",$req->name)->where("user_id",$req->user_id)->update(["status"=>0]);
+    public function deleteborderDetails(Request $req)
+    {
+        $output = [];
+        $table = bookingorder::where("name", $req->name)->where("user_id", $req->user_id)->update(["status" => 0]);
         // dd($table);
-        if($table){
+        if ($table) {
             $output["status"] = "success";
             $output["message"] = "Data deleted successfully";
-        }else{
+        } else {
             $output["status"] = "failed";
             $output["message"] = "Data failed to deleted";
         }
         return $output;
     }
-    public function editborderDetails(Request $req){
+    public function editborderDetails(Request $req)
+    {
         $output = [];
         $array = $req->all();
         $array['u_user_id'] = $req->user_id;
         $array['u_date'] = date('Y-m-d H:i:s');
-        $table = bookingorder::where("name",$req->name)->where("user_id",$req->user_id)->update($array);
+        $table = bookingorder::where("name", $req->name)->where("user_id", $req->user_id)->update($array);
         if ($table) {
             $output["status"] = "success";
             $output['message'] = "Data Updated Successfully";
         } else {
             $output["status"] = "failed";
             $output["message"] = "Data Failed To Update";
+        }
+        return response()->json($output);
+    }
+    public function deliverynote(Request $req)
+    {
+        $output = [];
+        $table = bookingorder::select("booking_order.name as dn", "a1.name as customer", "b_date", "a2.name as loading_form", "a3.name as destiantion", "description", "weight")
+            ->leftJoin("master_customer as a1", "a1.id", "booking_order.name")
+            ->leftJoin("master_loading_point as a2", "a2.id", "booking_order.name")
+            ->leftJoin("master_location as a3", "a3.id", "booking_order.name")
+            ->where("booking_order.user_id", $req->user_id)
+            ->where("booking_order.status", 1)
+            ->get()
+            ->toArray();
+        if ($table) {
+            $output["data"] = $table;
+        } else {
+            $output["data"] = null;
         }
         return response()->json($output);
     }

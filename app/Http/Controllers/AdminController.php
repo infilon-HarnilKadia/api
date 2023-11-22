@@ -976,7 +976,7 @@ class AdminController extends Controller
     }
     //****************** End Account ************************
     //****************** Start Daily Location ************************
-    public function showdailylocation(Request $req){
+    public function dailylocation(Request $req){
         $output = [];
         $table = BookingOrder::select(['cus.name as c_name','loading_date','booking_order.weight','a.rate','a.invoice_date','a.i_num','a1.name as truck','booking_order.truck_no','a2.dep_date','a3.name as from','a4.name as location','booking_order.remarks'])
         ->join("master_customer as cus", "booking_order.customer", "=", "cus.id")

@@ -86,7 +86,6 @@ Route::group(["middleware" => "checkToken"],function(){
     Route::post('/deliverynote',[AdminController::class,'deliverynote']);
     
     Route::post('/dailylocation',[AdminController::class,'dailylocation']);
-
 });
 
 // Route::post('/logout',[AdminController::class,"logout"]);

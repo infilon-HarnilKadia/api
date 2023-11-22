@@ -613,7 +613,7 @@ class AdminController extends Controller
         return response()->json($output);
     }
 
-    public function bookingorder(Request $req)
+    public function bookingorder(Request $req) 
     {
         $output = [];
         $table = BookingOrder::select("b_date", "booking_order.name as dn", "a1.name as c_name", "truck_no", "a2.name as trail_no", "a3.name as destination", "invoice", "i_date")
@@ -975,7 +975,31 @@ class AdminController extends Controller
         return response()->json($output);
     }
     //****************** End Account ************************
+    //****************** Start Daily Location ************************
+    public function showdailylocation(Request $req){
+        $output = [];
+        $table = BookingOrder::select(['cus.name as c_name','loading_date','booking_order.weight','a.rate','a.invoice_date','a.i_num','a1.name as truck','booking_order.truck_no','a2.dep_date','a3.name as from','a4.name as location','booking_order.remarks'])
+        ->join("master_customer as cus", "booking_order.customer", "=", "cus.id")
+        ->join("account as a","booking_order.name","=",'a.name')
+        ->leftJoin("master_truck as a1","booking_order.name",'=','a1.id')
+        ->leftJoin("daily_location as a2","booking_order.name",'a2.id')
+        ->leftJoin("master_loading_point as a3","booking_order.name",'a3.id')
+        ->leftJoin("master_location as a4","booking_order.name","a4.id")
+        ->where("booking_order.user_id",$req->user_id)
+        ->where("booking_order.status",1)->get()->toArray();
+        // dd($table);
+        if($table){
+            $output['data']=$table;
+        }
+        else{
+            $output['data']=null;
+        }
+        return response()->json($output);
 
+    }
+
+    //****************** End Daily Location ************************
+    
     // public function logout(Request $req){
     //     $output = [];
     //     $token = $req->input("token");
